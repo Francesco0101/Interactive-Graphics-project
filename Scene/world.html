@@ -4,17 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rotating Cube</title>
-  <!-- Importa Three.js usando import maps -->
+
   <script type="importmap">
     {
-      "imports": {
-        "three": "https://unpkg.com/three@0.139.2/build/three.module.js"
-      }
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/",
+            "dat.gui": "https://cdn.jsdelivr.net/npm/dat.gui@0.7.7/build/dat.gui.module.js"
+        }
     }
-  </script>
+</script>
   <!-- Collegamento al file JavaScript -->
   <script type="module" src="main.js"></script>
 </head>
 <body>
+ <canvas id="c"></canvas> 
+
+
 </body>
 </html>
