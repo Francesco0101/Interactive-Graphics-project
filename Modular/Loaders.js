@@ -1,5 +1,6 @@
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+import { AddAxesHelper } from './Helpers.js';
 import * as THREE from 'three';
 
 export async function loadModels(scene) {
@@ -22,19 +23,29 @@ export async function loadModels(scene) {
         Spaceship.acceleration = new THREE.Vector3(0, 0, 0); // initial acceleration
         scene.add(Spaceship);
         Spaceship_obj = Spaceship;
+        AddAxesHelper(Spaceship_obj);
     });
 
     return { Spaceship_obj };
 } 
 
 
-export function loadBackground(scene){
-    // Load and set the background texture
-    const textureLoader = new THREE.TextureLoader();
-    const backgroundImage = '../Scene/4kback.jpg'; // Replace with the URL of your background image
-    console.log("Loading background image...");
-    textureLoader.load(backgroundImage, function(texture) {
-    scene.background = texture;
-    });
 
+
+export function loadBackground(scene, renderer) {
+    //Load and set the background texture
+    const textureLoader = new THREE.TextureLoader();
+    const backgroundImage = '../Scene/4kback.jpg'; 
+    console.log("Loading background image...");
+    textureLoader.load(
+        backgroundImage,
+        function(texture) {
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); 
+            scene.background = texture;
+        },
+        undefined,
+        function(error) {
+            console.error('Error loading texture:', error);
+        }
+    );
 }

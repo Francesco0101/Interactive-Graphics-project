@@ -43,3 +43,10 @@ export function makeXYZGUI(gui, vector3, name, onChangeFn) {
     folder.add(vector3, 'z', -10, 10).onChange(onChangeFn);
     folder.open();
 }
+
+export function AddAxesHelper(object) {
+        const axes = new THREE.AxesHelper(50);
+        axes.material.depthTest = false;
+        axes.renderOrder = 1;
+        object.add(axes);
+}

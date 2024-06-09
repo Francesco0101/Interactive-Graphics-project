@@ -10,6 +10,8 @@ export function createRenderer() {
     const canvas = document.querySelector('#c');
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio); //Set correct pixel ratio for high definition
+    renderer.capabilities.getMaxAnisotropy();
     return renderer;
 }
 

@@ -13,7 +13,7 @@ export function createCameras(scene) {
       
       // Create the follow camera
       const followCamera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
-      followCamera.position.set(0, 50, 0);
+      followCamera.position.set(0, 10, 0);
       
       const TPcamera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
       followCamera.position.set(0, 50, 0);
@@ -25,7 +25,7 @@ export function createCameras(scene) {
 
 export function updateFollowCamera(Spaceship_obj, followCamera) {
     if (Spaceship_obj) {
-        followCamera.position.copy(Spaceship_obj.position).add(new THREE.Vector3(0, 50, 0));
+        followCamera.position.copy(Spaceship_obj.position).add(new THREE.Vector3(0, 15, 0));
         followCamera.lookAt(Spaceship_obj.position);
     }
 }
