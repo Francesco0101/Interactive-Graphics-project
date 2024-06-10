@@ -46,6 +46,18 @@ console.log(objects)
 // Create the clock
 const clock = new THREE.Clock();
 // Animation loop 
+// Get UI elements
+const maxVelocity = 10; // Adjust this value based on your needs
+const posXElem = document.getElementById('pos-x');
+const posYElem = document.getElementById('pos-y');
+const posZElem = document.getElementById('pos-z');
+const velXElem = document.getElementById('vel-x');
+const velYElem = document.getElementById('vel-y');
+const velZElem = document.getElementById('vel-z');
+const speedBarElem = document.getElementById('speed-bar');
+const speedValueElem = document.getElementById('speed-value');
+
+
 function animate() {
     requestAnimationFrame(animate);
 
@@ -60,7 +72,19 @@ function animate() {
     if (activeCamera.value === TPcamera) {
         update3PCamera(Spaceship_obj, TPcamera);
     }
+    if(Spaceship_obj){
+    posXElem.textContent = Spaceship_obj.position.x.toFixed(2);
+    posYElem.textContent = Spaceship_obj.position.y.toFixed(2);
+    posZElem.textContent = Spaceship_obj.position.z.toFixed(2);
     moveSpaceship(Spaceship_obj,delta);
+    velXElem.textContent = Spaceship_obj.velocity.x.toFixed(2);
+    velYElem.textContent = Spaceship_obj.velocity.y.toFixed(2);
+    velZElem.textContent = Spaceship_obj.velocity.z.toFixed(2);
+    const speed = Spaceship_obj.velocity.length();
+    const speedPercentage = Math.min(speed / maxVelocity, 1) * 100;
+    speedBarElem.style.width = `${speedPercentage}%`;
+    speedValueElem.textContent = speed.toFixed(2);
+    }
     renderer.render(scene, activeCamera.value);
 }
 

@@ -25,10 +25,70 @@
   <script type="module" src="Loaders.js"></script>
   <script type="module" src="Helpers.js"></script>
   <script type="module" src="SceneSetup.js"></script> -->
-
+  <style>
+    #ui {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    .ui-item {
+      margin-bottom: 5px;
+    }
+    .ui-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .ui-item span {
+      font-weight: bold;
+    }
+    #speed-bar-container {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20%;
+      height: 5% ;
+      background-color: rgba(0, 0, 0, 0.3);
+      border: 1px solid #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    #speed-bar {
+      height: 100%;
+      width: 0;
+      background-color: lime;
+    }
+    #speed-value {
+      margin-left: 10px;
+      color: white;
+    }
+  </style>
 </head>
 <body>
- <canvas id="c"></canvas> 
-
+  <canvas id="c"></canvas>
+  <div id="ui">
+    <div class="ui-row">
+      <div class="ui-item">Position X: <span id="pos-x">0</span></div>
+      <div class="ui-item">Y: <span id="pos-y">0</span></div>
+      <div class="ui-item">Z: <span id="pos-z">0</span></div>
+    </div>
+    <div class="ui-row">
+      <div class="ui-item">Velocity X: <span id="vel-x">0</span></div>
+      <div class="ui-item">Y: <span id="vel-y">0</span></div>
+      <div class="ui-item">Z: <span id="vel-z">0</span></div>
+    </div>
+  </div>
+  <div id="speed-bar-container">
+    <div id="speed-bar"></div>
+    <div id="speed-value">0.00</div>
+  </div>
 </body>
 </html>
