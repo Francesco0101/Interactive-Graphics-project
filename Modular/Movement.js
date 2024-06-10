@@ -55,8 +55,8 @@ export function moveSpaceship(Spaceship_obj, delta) {
         }
 
         Spaceship_obj.position.add(Spaceship_obj.velocity.clone().multiplyScalar(delta));
-        console.log("direction: ",Spaceship_obj.velocity)
-        console.log("velocity: ",Spaceship_obj.velocity.length())
+        // console.log("direction: ",Spaceship_obj.velocity)
+        // console.log("velocity: ",Spaceship_obj.velocity.length())
 
         if (keys.w.pressed) {
             Spaceship_obj.rotation.x -= 0.1;

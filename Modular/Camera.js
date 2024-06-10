@@ -6,7 +6,7 @@ export function createCameras(scene) {
         width: window.innerWidth,
         height: window.innerHeight,
         near: 0.1,
-        far: 1000
+        far: 3000
       };
       const camera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
       camera.position.set(70, 10, 10);

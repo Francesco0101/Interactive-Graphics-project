@@ -1,4 +1,4 @@
-import { createScene, createRenderer, createLights, createPlanet } from './SceneSetup.js';
+import { createScene, createRenderer, createLights, CreateRingedPlanet , CreateSystem } from './SceneSetup.js';
 import { createCameras, updateFollowCamera, update3PCamera } from './Camera.js';
 import { createControls } from './Controls.js';
 import { loadModels ,loadBackground} from './Loaders.js';
@@ -6,7 +6,6 @@ import { setupGUI } from './GUI.js';
 import { moveSpaceship } from './Movement.js';
 
 import * as THREE from 'three';
-
 // Create the scene
 const scene = createScene();
 
@@ -39,12 +38,21 @@ console.log("TPcamera: ",TPcamera)
 console.log("scene: ",scene)
 console.log("controls: ",controls)
 // Create planet
-createPlanet(scene);
 
-let clock = new THREE.Clock();
+// CreateRingedPlanet(scene, 50 , 5);
+let objects = [];
+objects= CreateSystem(scene);
+console.log(objects)
+// Create the clock
+const clock = new THREE.Clock();
 // Animation loop 
 function animate() {
     requestAnimationFrame(animate);
+
+    objects.forEach((obj) => {
+         obj.rotation.y += 0.00005;
+    });
+
     let delta = clock.getDelta(); // Calcola il delta time
     if (activeCamera.value === followCamera) {
         updateFollowCamera(Spaceship_obj, followCamera);
