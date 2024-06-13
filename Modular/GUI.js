@@ -2,13 +2,9 @@ import * as THREE from 'three';
 import { GUI } from 'dat.gui';
 import { MinMaxGUIHelper, ColorGUIHelper, makeXYZGUI } from './Helpers.js';
 
-function updateLight(light,helper) {
-    light.target.updateMatrixWorld();
-    helper.update();
-  }
-
-export function setupGUI(camera, activeCamera, followCamera, TPcamera, controls, scene) {
-    const gui_camera = new GUI();
+export function setupGUI(camera, activeCamera, followCamera, TPcamera, scene) {
+    const gui = new GUI();
+    const gui_camera = gui.addFolder('Camera_params');
     gui_camera.add(camera, 'fov', 1, 180).onChange(() => camera.updateProjectionMatrix());
     
     const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
@@ -23,19 +19,22 @@ export function setupGUI(camera, activeCamera, followCamera, TPcamera, controls,
         activeCamera.value = activeCamera.value === camera ? TPcamera : camera;
       }}, 'switchCamera').name('3rd Person');
 
-    const gui_light = new GUI();
-    const light = scene.children.find(child => child instanceof THREE.DirectionalLight);
-    gui_light.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
-    gui_light.add(light, 'intensity', 0, 2, 0.01);
-    const helper = scene.children.find(child => child instanceof THREE.DirectionalLightHelper);
-    console.log("camera attiva: ", activeCamera.value)
+    const pointLight = scene.children.find(child => child instanceof THREE.PointLight);
+    const pointLightHelper = scene.children.find(child => child instanceof THREE.PointLightHelper);
+    // PointLight controls
+    const lightFolder = gui.addFolder('Sun_Light');
+    lightFolder.add(pointLight.position, 'x', -500, 500).name('posX');
+    lightFolder.add(pointLight.position, 'y', -500, 500).name('posY');
+    lightFolder.add(pointLight.position, 'z', -500, 500).name('posZ');
+    lightFolder.add(pointLight, 'intensity', 0, 1000).name('intensity');
+    lightFolder.add(pointLight, 'distance', 0, 1000).name('distance');
+    lightFolder.add(pointLight, 'decay', 0, 2).name('decay');
+    
+    // PointLightHelper visibility toggle
+    lightFolder.add({ helperVisible: true }, 'helperVisible').name('Helper Visible').onChange((value) => {
+        pointLightHelper.visible = value;
+    });
 
-    // makeXYZGUI(gui_light, light.position, 'position', () => light.target.updateMatrixWorld());
-    // makeXYZGUI(gui_light, light.target.position, 'target', () => light.target.updateMatrixWorld());
-    makeXYZGUI(gui_light, light.position, 'position', updateLight(light,helper));
-    makeXYZGUI(gui_light, light.target.position, 'target', updateLight(light,helper));
-
-      
 }
 
 

@@ -9,7 +9,7 @@ export function createCameras(scene) {
         far: 3000
       };
       const camera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
-      camera.position.set(160, 10, 0);
+      camera.position.set(160, 20, 0);
       
       // Create the follow camera
       const followCamera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
