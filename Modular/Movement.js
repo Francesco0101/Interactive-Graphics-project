@@ -38,17 +38,21 @@ window.addEventListener('keyup', (event) => {
 });
  
 
+// Function to move the spaceship based on the current state of the keys and physics parameters
+
 export function moveSpaceship(Spaceship_obj, delta , realistic = true) {
     if (Spaceship_obj) {
-        const maxVelocity = Spaceship_obj.MaxVelocity+10; // Set your desired max velocity
+        const maxVelocity = Spaceship_obj.MaxVelocity; // Set your desired max velocity
         const dampingFactor = 0.95; // Adjust this value for the rate of slowing down
-        const thrustPower = 0.1; // Adjust this value for the rate of acceleration
+        const thrustPower = 0.5; // Adjust this value for the rate of acceleration
        
         if (realistic) {
         if (keys.space.pressed) {
-            console.log("realistico: ",realistic)
-            if (Spaceship_obj.Fuel > -1000) {
-                console.log("Fuel: ", Spaceship_obj.Fuel);
+            // console.log("realistico: ",realistic)
+            if (Spaceship_obj.Fuel > -1000) {  //CHANGE WHEN FUEL IS IMPLEMENTED
+                if( Spaceship_obj.Fuel%10 == 0){ //how to use module to print every 10 times
+                    // console.log("Fuel: ", Spaceship_obj.Fuel);
+                }
                 
                 // Calculate the thrust direction and apply it
                 const forward = new THREE.Vector3(0, 0, thrustPower).applyQuaternion(Spaceship_obj.quaternion);
@@ -56,16 +60,16 @@ export function moveSpaceship(Spaceship_obj, delta , realistic = true) {
                 Spaceship_obj.Fuel -= 0.05;
                 
                 // Clamp the velocity to the maximum velocity
-                if (Spaceship_obj.velocity.length() > maxVelocity) {
-                    Spaceship_obj.velocity.setLength(maxVelocity);
+                if (Spaceship_obj.velocity.length() > maxVelocity) { //velocity.lenght is the magnitude of the velocity vector
+                    Spaceship_obj.velocity.setLength(maxVelocity); 
                 }
             }
         }
         } else {
             if (keys.space.pressed) {
-                console.log("non realistico: ",realistic)
+                // console.log("non realistico: ",realistic)
                 if (Spaceship_obj.Fuel > -1000) {
-                    console.log("Fuel: ", Spaceship_obj.Fuel);
+                    // console.log("Fuel: ", Spaceship_obj.Fuel);
                     
                     const forward = new THREE.Vector3(0, 0, thrustPower).applyQuaternion(Spaceship_obj.quaternion);
                     // Calculate the thrust direction and apply it
@@ -94,13 +98,11 @@ export function moveSpaceship(Spaceship_obj, delta , realistic = true) {
                 
             }
         }
-
+        // Update the spaceship's position based on its velocity and the delta time
         Spaceship_obj.position.add(Spaceship_obj.velocity.clone().multiplyScalar(delta));
-        // console.log("direction: ",Spaceship_obj.velocity)
-        // console.log("velocity: ",Spaceship_obj.velocity.length())
         
         if (keys.w.pressed) {
-            Spaceship_obj.rotateX(-0.05)
+            Spaceship_obj.rotateX(-0.05) // Function rotateX rotates the object around the x-axis of the object in the world space
         }
         if (keys.s.pressed) {
             Spaceship_obj.rotateX(0.05);
