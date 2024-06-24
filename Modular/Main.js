@@ -63,6 +63,23 @@ const speedBarElem = document.getElementById('speed-bar');
 const speedValueElem = document.getElementById('speed-value');
 const FuelBarElem = document.getElementById('fuel-bar');
 
+function showCollisionMessage() {
+    const messageDiv = document.createElement('div');
+    messageDiv.id = 'collision-message';
+    messageDiv.innerText = 'YOU COLLIDED WITH A PLANET AND EXPLODED, RESETTING POSITION TO SPAWN POINT';
+  
+    document.body.appendChild(messageDiv);
+  
+    // Hide the message after 3 seconds
+    setTimeout(() => {
+      messageDiv.remove();
+      window.location.reload();
+      Spaceship_obj.position.set(400, 60, 200);
+      
+    }, 1000);
+  }
+
+
 // Function to check if a point is inside a sphere
 function isPointInsideSphere(point, sphereCenter, sphereRadius) {
     const distance = point.distanceTo(sphereCenter);
@@ -85,13 +102,15 @@ function checkBoundingBoxSphereCollision(boundingBox, sphereCenter, sphereRadius
     for (const point of points) {
         if (isPointInsideSphere(point, sphereCenter, sphereRadius)) {
             console.log("collision detecteddddddddddddddddddddddd")
-            Spaceship_obj.position.set(400, 60, 200);
+            // Spaceship_obj.position.set(0, 0, 0);
             Spaceship_obj.velocity.set(0, 0, 0);
+            showCollisionMessage();
         }
     }
 
     return false;
 }
+
 function animate() {
     requestAnimationFrame(animate);
     // console.log("planets dentro animate: ",Planets)
@@ -106,6 +125,9 @@ function animate() {
     }
 
     if (Spaceship_obj) {
+        // Update bounding box for the spaceship
+        Spaceship_obj.boundingBox.setFromObject(Spaceship_obj);
+
         // Update bounding box helper if it exists
         if (Spaceship_obj.boxHelper) {
             Spaceship_obj.boxHelper.update();
@@ -119,10 +141,12 @@ function animate() {
             // console.log("pianeta: ",planet)
 
             if (planet.name == 'Station') {
+                
                 const sphereCenter = new THREE.Vector3().setFromMatrixPosition(planet.matrixWorld);
                 const distance = Spaceship_obj.position.distanceTo(sphereCenter);
                 const rangeRadius = planet.geometry.parameters.radius; // Adjust if the radius is different
                 if (distance < rangeRadius) {
+                    console.log("dentro stazione")
                     
                     if(Spaceship_obj.Fuel < 1000){
                     Spaceship_obj.Fuel +=1;
@@ -131,14 +155,13 @@ function animate() {
             }
         }
             else{
-                if(planet.radius != undefined){
                     const sphereCenter = new THREE.Vector3().setFromMatrixPosition(planet.matrixWorld);
                     // console.log("radius",planet.radius)
                     if (checkBoundingBoxSphereCollision(Spaceship_obj.boundingBox, sphereCenter, planet.radius)) {
                         console.log('Collision detected!');
                         
                     }
-                    }
+                    
 
             }
 

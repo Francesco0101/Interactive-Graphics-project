@@ -7,7 +7,7 @@ export function createCameras(scene) {
         width: window.innerWidth,
         height: window.innerHeight,
         near: 0.1,
-        far: 1000
+        far: 10000
       };
 
       // create a perspective camera with fov, aspect ratio, near and far clipping plane
@@ -22,7 +22,7 @@ export function createCameras(scene) {
       const TPcamera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
       followCamera.position.set(0, 50, 0); //placeholder will be changed dinamically
       
-      let activeCamera = { value: TPcamera }; //variable to switch between cameras
+      let activeCamera = { value: camera }; //variable to switch between cameras
 
     return { camera, followCamera, TPcamera, activeCamera };
 } 

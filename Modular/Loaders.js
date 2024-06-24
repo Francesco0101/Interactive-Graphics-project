@@ -42,6 +42,11 @@ export async function loadModels1(scene) {
         Spaceship.Fuel = 100;
 
         Spaceship.boundingBox = new THREE.Box3().setFromObject(Spaceship);
+        // calculate the mean lenght of the bounding box
+        Spaceship.side_len = (Spaceship.boundingBox.max.x - Spaceship.boundingBox.min.x + Spaceship.boundingBox.max.y - Spaceship.boundingBox.min.y + Spaceship.boundingBox.max.z - Spaceship.boundingBox.min.z) / 3;
+
+
+
         scene.add(Spaceship);
         Spaceship_obj = Spaceship;
         AddAxesHelper(Spaceship_obj);
@@ -110,23 +115,18 @@ export async function loadFortnite(scene, scale = 0.005, position = { x: 0, y: 0
 }
 
 export function loadBackground(scene, renderer) {
-    //Load and set the background texture
-    const textureLoader = new THREE.TextureLoader();
     const backgroundImage = '../Scene/4kback.jpg'; 
-    console.log("Loading background image...");
-    textureLoader.load(
+    console.log("Loading background image...");   
+    const loader = new THREE.TextureLoader();
+    const texture = loader.load(
         backgroundImage,
-        function(texture) {
-            texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); 
-            scene.background = texture;
-        },
-        undefined,
-        function(error) {
-            console.error('Error loading texture:', error);
-        }
-    );
-}
+      () => {
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        scene.background = texture;
+      });
 
+}
 
 export async function loadFbx(scene) {
     const fbxLoader = new FBXLoader();
