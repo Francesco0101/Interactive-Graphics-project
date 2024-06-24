@@ -55,7 +55,6 @@ export async function loadModels1(scene) {
         boxHelper.visible = false;
         scene.add(boxHelper);
         Spaceship.boxHelper = boxHelper; // Store reference for updates
-
         // Initialize the GUI
         const gui_ship = new GUI();
         const Spaceship_gui = gui_ship.addFolder('Spaceship Controls');

@@ -15,6 +15,15 @@ const renderer = createRenderer();
 // Create the lights
 createLights(scene);
 
+// Add directional light to the scene
+const spaceship_light = new THREE.PointLight('lightyellow', 1000);
+spaceship_light.position.set(400, 60, 200);
+scene.add(spaceship_light);
+spaceship_light.intensity = 1000;
+
+
+
+
 // Create the cameras
 const { camera, followCamera, TPcamera, activeCamera } = createCameras(scene);
 
@@ -111,6 +120,10 @@ function checkBoundingBoxSphereCollision(boundingBox, sphereCenter, sphereRadius
     return false;
 }
 
+
+
+
+
 function animate() {
     requestAnimationFrame(animate);
     // console.log("planets dentro animate: ",Planets)
@@ -167,18 +180,15 @@ function animate() {
 
             planet.rotation.y += 0.0001; // Adjust rotation speed if necessary
 
-            // Update the bounding sphere's position
-            // if (planet.boundingSphere) {
-            //     planet.boundingSphere.center.copy(planet.position);
-            // }
         });
-
     const realistic = false;
+    moveSpaceship(Spaceship_obj,delta,realistic, spaceship_light);
+
+    
     maxVelocity = Spaceship_obj.MaxVelocity;
     posXElem.textContent = Spaceship_obj.position.x.toFixed(2);
     posYElem.textContent = Spaceship_obj.position.y.toFixed(2);
     posZElem.textContent = Spaceship_obj.position.z.toFixed(2);
-    moveSpaceship(Spaceship_obj,delta,realistic);
     velXElem.textContent = Spaceship_obj.velocity.x.toFixed(2);
     velYElem.textContent = Spaceship_obj.velocity.y.toFixed(2);
     velZElem.textContent = Spaceship_obj.velocity.z.toFixed(2);

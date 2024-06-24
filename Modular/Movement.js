@@ -39,13 +39,15 @@ window.addEventListener('keyup', (event) => {
  
 
 // Function to move the spaceship based on the current state of the keys and physics parameters
-
-export function moveSpaceship(Spaceship_obj, delta , realistic = true) {
+export function moveSpaceship(Spaceship_obj, delta , realistic = true, light) {
     if (Spaceship_obj) {
         const maxVelocity = Spaceship_obj.MaxVelocity; // Set your desired max velocity
         const dampingFactor = 0.95; // Adjust this value for the rate of slowing down
         const thrustPower = 0.5; // Adjust this value for the rate of acceleration
-       
+        //light.position is the copy of the space pos
+        light.position.copy(Spaceship_obj.position);
+     
+
         if (realistic) {
         if (keys.space.pressed) {
             if (Spaceship_obj.Fuel > 0) {  //CHANGE WHEN FUEL IS IMPLEMENTED
@@ -96,12 +98,11 @@ export function moveSpaceship(Spaceship_obj, delta , realistic = true) {
         }
 
         // Update the spaceship's position based on its velocity and the delta time
-
+        
         Spaceship_obj.position.add(Spaceship_obj.velocity.clone().multiplyScalar(delta));
         
-        const omega = Spaceship_obj.velocity.length()/(Spaceship_obj.side_len *2); //angular velocity
-        const rot_ang = omega*delta + 0.01; //rotation angle
-
+        const omega = Spaceship_obj.velocity.length()/(Spaceship_obj.side_len*3); //angular velocity
+        const rot_ang = omega*delta + 0.03; //rotation angle
         if (keys.w.pressed) {
             Spaceship_obj.rotateX(-rot_ang) // Function rotateX rotates the object around the x-axis of the object in the world space
         }
