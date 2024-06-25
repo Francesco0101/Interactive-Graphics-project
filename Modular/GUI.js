@@ -8,7 +8,7 @@ export function setupGUI(camera, activeCamera, followCamera, TPcamera, scene) {
     const gui_camera = gui.addFolder('Camera_params');
 
     // Add a control for the camera's field of view and update the projection matrix on change
-    gui_camera.add(camera, 'fov', 1, 180).onChange(() => camera.updateProjectionMatrix());
+    gui_camera.add(camera, 'fov', 1, 180).onChange(() => active.updateProjectionMatrix());
     
     // Create a helper for controlling the camera's near and far clipping planes
     const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
@@ -23,7 +23,7 @@ export function setupGUI(camera, activeCamera, followCamera, TPcamera, scene) {
     gui_camera.add({ switchCamera: () => {
         activeCamera.value = activeCamera.value === camera ? TPcamera : camera;
       }}, 'switchCamera').name('3rd Person');
-    
+    gui_camera.open();
     // Find the point light and point light helper in the scene
     const pointLight = scene.children.find(child => child instanceof THREE.PointLight);
     const pointLightHelper = scene.children.find(child => child instanceof THREE.PointLightHelper);

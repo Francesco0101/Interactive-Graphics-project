@@ -45,18 +45,13 @@ loadFortnite(scene).then(models => {
 
 // Create GUI
 setupGUI(camera, activeCamera, followCamera, TPcamera, scene);
-console.log("camera: ",camera)
 console.log("activeCamera: ",activeCamera.value)
-console.log("followCamera: ",followCamera)
-console.log("TPcamera: ",TPcamera)
 console.log("scene: ",scene)
-console.log("controls: ",controls)
-//make a gui for the spaceship, where i can change the velocity with a slidebar, a button to reset position and a button to activate the bounding box. a button to refill fuel too after the spaceship object has been loaded
 
 let Planets = [];
 Planets= CreateSystem(scene);
 
-console.log("pianeti:", Planets)
+console.log("planets:", Planets)
 // Create the clock
 const clock = new THREE.Clock();
 // Animation loop 
@@ -75,7 +70,7 @@ const FuelBarElem = document.getElementById('fuel-bar');
 function showCollisionMessage() {
     const messageDiv = document.createElement('div');
     messageDiv.id = 'collision-message';
-    messageDiv.innerText = 'YOU COLLIDED WITH A PLANET AND EXPLODED, RESETTING POSITION TO SPAWN POINT';
+    messageDiv.innerText = 'YOU COLLIDED WITH A PLANET AND EXPLODED, RELOADING THE PAGE...';
   
     document.body.appendChild(messageDiv);
   
@@ -110,7 +105,7 @@ function checkBoundingBoxSphereCollision(boundingBox, sphereCenter, sphereRadius
 
     for (const point of points) {
         if (isPointInsideSphere(point, sphereCenter, sphereRadius)) {
-            console.log("collision detecteddddddddddddddddddddddd")
+            console.log("collision decteded")
             // Spaceship_obj.position.set(0, 0, 0);
             Spaceship_obj.velocity.set(0, 0, 0);
             showCollisionMessage();
@@ -148,6 +143,7 @@ function animate() {
         // Check for collisions
         // Update planets' rotation and bounding spheres
         Planets.forEach((planet) => {
+
             // The method setFromMatrixPosition(matrix) sets the coordinates of the vector to the position components extracted from the provided transformation matrix.
             // planet.matrixWorld is a 4x4 matrix that represents the world transformation of the planet object. This matrix includes the object's translation (position), rotation, and scale in the world space.
             // setFromMatrixPosition specifically extracts and sets the translation (position) part of this matrix to the sphereCenter vector.
@@ -159,7 +155,6 @@ function animate() {
                 const distance = Spaceship_obj.position.distanceTo(sphereCenter);
                 const rangeRadius = planet.geometry.parameters.radius; // Adjust if the radius is different
                 if (distance < rangeRadius) {
-                    console.log("dentro stazione")
                     
                     if(Spaceship_obj.Fuel < 1000){
                     Spaceship_obj.Fuel +=1;

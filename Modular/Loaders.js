@@ -32,7 +32,7 @@ export async function loadModels1(scene) {
         });
 
         Spaceship.scale.set(0.03, 0.03, 0.03);
-        Spaceship.position.set(400, 60, 200);
+        Spaceship.position.set(370, 60, 200);
         //rotate the spaceship by pi/2
         Spaceship.rotation.y =- Math.PI / 2;
         Spaceship.velocity = new THREE.Vector3(0, 0, 0); // initial velocity
@@ -59,7 +59,6 @@ export async function loadModels1(scene) {
         const gui_ship = new GUI();
         const Spaceship_gui = gui_ship.addFolder('Spaceship Controls');
         Spaceship_gui.add(Spaceship, 'MaxVelocity', 0, 100).name('Max Velocity');
-        Spaceship_gui.add(Spaceship, 'Fuel', 0, 1000).name('Fuel');
         Spaceship_gui.add({ resetPosition: () => {
             Spaceship.position.set(400, 60, 200);
             Spaceship.velocity.set(0, 0, 0);
@@ -115,7 +114,6 @@ export async function loadFortnite(scene, scale = 0.005, position = { x: 0, y: 0
 
 export function loadBackground(scene, renderer) {
     const backgroundImage = '../Scene/4kback.jpg'; 
-    console.log("Loading background image...");   
     const loader = new THREE.TextureLoader();
     const texture = loader.load(
         backgroundImage,

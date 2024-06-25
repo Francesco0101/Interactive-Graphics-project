@@ -217,17 +217,16 @@ export function CreateSystem(scene){
   console.log("station_obj2: prima del modello ",station_obj2)
   loadFbx(solarSystem).then(models => {
       station_obj2 = models.Station_fbx;
-      console.log("rangeSphere: ",models.rangeSphere)
+
       Planets.push(models.rangeSphere)
-      console.log("station_obj2: dopo il modello",station_obj2)
+   
   });
 
   
   Planets.forEach(planet => {
     console.log("planet in setup", planet)
   });
-  console.log("solar system", solarSystem)
-  console.log("finito scene")
+
 
   return Planets;
 }
