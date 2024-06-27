@@ -67,6 +67,7 @@ const speedBarElem = document.getElementById('speed-bar');
 const speedValueElem = document.getElementById('speed-value');
 const FuelBarElem = document.getElementById('fuel-bar');
 
+
 function showCollisionMessage() {
     const messageDiv = document.createElement('div');
     messageDiv.id = 'collision-message';
@@ -124,7 +125,7 @@ function animate() {
     // console.log("planets dentro animate: ",Planets)
     // console.log("spaceship_obj: ",Spaceship_obj)
     // Update bounding box for the spaceship
-    let delta = clock.getDelta(); // Calcola il delta time
+    let delta = clock.getDelta(); // time in ms since last frame
     if (activeCamera.value === followCamera) {
         updateFollowCamera(Spaceship_obj, followCamera);
     }
@@ -135,11 +136,11 @@ function animate() {
     if (Spaceship_obj) {
         // Update bounding box for the spaceship
         Spaceship_obj.boundingBox.setFromObject(Spaceship_obj);
-
         // Update bounding box helper if it exists
         if (Spaceship_obj.boxHelper) {
             Spaceship_obj.boxHelper.update();
         }
+
         // Check for collisions
         // Update planets' rotation and bounding spheres
         Planets.forEach((planet) => {
@@ -164,7 +165,6 @@ function animate() {
         }
             else{
                     const sphereCenter = new THREE.Vector3().setFromMatrixPosition(planet.matrixWorld);
-                    // console.log("radius",planet.radius)
                     if (checkBoundingBoxSphereCollision(Spaceship_obj.boundingBox, sphereCenter, planet.radius)) {
                         console.log('Collision detected!');
                         
@@ -173,11 +173,10 @@ function animate() {
 
             }
 
-            planet.rotation.y += 0.0001; // Adjust rotation speed if necessary
+            planet.rotation.y += 0.0001; //  rotation speed 
 
         });
-    const realistic = false;
-    moveSpaceship(Spaceship_obj,delta,realistic, spaceship_light);
+    moveSpaceship(Spaceship_obj,delta, spaceship_light);
 
     
     maxVelocity = Spaceship_obj.MaxVelocity;

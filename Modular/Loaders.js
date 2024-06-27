@@ -30,10 +30,11 @@ export async function loadModels1(scene) {
                 child.geometry.translate(-center.x, -center.y, -center.z + 1); // Adjust the center position as needed
             }
         });
-
         Spaceship.scale.set(0.03, 0.03, 0.03);
         Spaceship.position.set(370, 60, 200);
+
         //rotate the spaceship by pi/2
+
         Spaceship.rotation.y =- Math.PI / 2;
         Spaceship.velocity = new THREE.Vector3(0, 0, 0); // initial velocity
         Spaceship.MaxVelocity = 100; // Set your desired max velocity
@@ -75,6 +76,51 @@ export async function loadModels1(scene) {
 
     return { Spaceship_obj };
 }
+
+// load station fbx
+export async function loadFbx(scene) {
+    const fbxLoader = new FBXLoader();
+
+    let Station_fbx;
+    const bonusRange = new THREE.SphereGeometry(60, 32, 32); // Adjust radius as needed
+    const rangeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+    const rangeSphere = new THREE.Mesh(bonusRange, rangeMaterial);
+    rangeSphere.name = 'Station'
+
+    await fbxLoader.loadAsync('../SP1/3DEC_07.fbx').then((Station) => {
+
+
+        Station.scale.set(0.15, 0.15, 0.15);
+        Station.position.set(400, 50, 250);
+        Station.rotation.y =Math.PI ;
+        scene.add(Station);
+        Station_fbx = Station;
+        rangeSphere.position.copy(Station.position);
+        scene.add(rangeSphere);
+        rangeSphere.visible = false; // Make the sphere invisible by default
+        // Initialize the GUI
+        const gui_station = new GUI();
+        const Station_Gui = gui_station.addFolder('Stations one Controls');
+        // Add a button to remove the wireframe
+        Station_Gui.add({ Wireframe: () => {
+            if (rangeSphere.visible) {
+            rangeSphere.visible = false; // Make the sphere invisible
+            }
+            else {
+            rangeSphere.visible = true; // Make the sphere visible
+            }
+        }}, 'Wireframe').name('Wireframe');
+        Station_Gui.open();
+        
+    });
+
+    return { Station_fbx , rangeSphere};
+}
+
+
+
+
+
 
 //LOAD FBX WITH PNG TEXTURES
 
@@ -125,42 +171,5 @@ export function loadBackground(scene, renderer) {
 
 }
 
-export async function loadFbx(scene) {
-    const fbxLoader = new FBXLoader();
 
-    let Station_fbx;
-    const bonusRange = new THREE.SphereGeometry(60, 32, 32); // Adjust radius as needed
-    const rangeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-    const rangeSphere = new THREE.Mesh(bonusRange, rangeMaterial);
-    rangeSphere.name = 'Station'
-
-    await fbxLoader.loadAsync('../SP1/3DEC_07.fbx').then((Station) => {
-
-
-        Station.scale.set(0.15, 0.15, 0.15);
-        Station.position.set(400, 50, 250);
-        Station.rotation.y =Math.PI ;
-        scene.add(Station);
-        Station_fbx = Station;
-        rangeSphere.position.copy(Station.position);
-        scene.add(rangeSphere);
-        rangeSphere.visible = false; // Make the sphere invisible by default
-        // Initialize the GUI
-        const gui_station = new GUI();
-        const Station_Gui = gui_station.addFolder('Stations one Controls');
-        // Add a button to remove the wireframe
-        Station_Gui.add({ Wireframe: () => {
-            if (rangeSphere.visible) {
-            rangeSphere.visible = false; // Make the sphere invisible
-            }
-            else {
-            rangeSphere.visible = true; // Make the sphere visible
-            }
-        }}, 'Wireframe').name('Wireframe');
-        Station_Gui.open();
-        
-    });
-
-    return { Station_fbx , rangeSphere};
-}
 

@@ -16,13 +16,13 @@ export function createCameras(scene) {
       
       // Create the follow camera to followe the spaceship from the top (not useful anymore)
       const followCamera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
-      followCamera.position.set(0, 10, 0); //placeholder will be changed dinamically
+      followCamera.position.set(0, 10, 0); 
       
       // Create the 3rd person camera to follow the spaceship from behind
       const TPcamera = new THREE.PerspectiveCamera(camera_param.fov, camera_param.width / camera_param.height, camera_param.near, camera_param.far);
-      followCamera.position.set(0, 50, 0); //placeholder will be changed dinamically
+      followCamera.position.set(0, 50, 0); 
       
-      let activeCamera = { value: camera }; //variable to switch between cameras
+      let activeCamera = { value: TPcamera }; //variable to switch between cameras
 
     return { camera, followCamera, TPcamera, activeCamera };
 } 

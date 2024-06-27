@@ -41,8 +41,7 @@ export function createLights(scene) {
 export function CreateRingedPlanet(scene,objects, radius, detail,texture_url, ring_url) {
     const SphereGeometry = new THREE.SphereGeometry(radius, detail, detail)
     // phong material property is to give the sphere a shiny appearance
-    // with the formula : I = Ka * Ia + Kd * Id * max(0, N · L) + Ks * Is * max(0, N · H)^s where I is the intensity of the light, Ka is the ambient light, Ia is the intensity of the ambient light, Kd is the diffuse light, Id is the intensity of the diffuse light, Ks is the specular light, Is is the intensity of the specular light, N is the normal vector, L is the light vector, H is the half vector, and s is the shininess.
-    const SphereMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load(texture_url)}); // Create the 3D sphere material
+    const SphereMaterial = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load(texture_url)}); // Create the 3D sphere material with a texture, it uses the standard uv mapping
     const BaseSphere = new THREE.Mesh(SphereGeometry, SphereMaterial);
     BaseSphere.radius = radius;
     BaseSphere.name = "saturn"
@@ -56,7 +55,6 @@ class CustomSinCurve extends THREE.Curve {
     super();
     this.scale = scale;
   }
-
   getPoint(t) {
     const angle = t * Math.PI * 2;
     const x = Math.cos(angle) * this.scale;
@@ -78,10 +76,10 @@ shape.lineTo(width / 2, height / 2);
 shape.lineTo(-width / 2, height / 2);
 shape.lineTo(-width / 2, -height / 2);
 
-const extrudeSettings = {
-  steps: 100,
+const extrudeSettings = { // Settings for the extrusion which is the path of the ring
+  steps: 100, 
   extrudePath: path,
-  bevelEnabled: false,
+  bevelEnabled: false, 
 };
 
 const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
@@ -137,7 +135,6 @@ function CreatePlanetAndMoon(scene, objects ,radius, detail, color, emissive , x
   const MoonMaterial = new THREE.MeshPhongMaterial({map: texture_moon});
   const MoonMesh = new THREE.Mesh(new THREE.SphereGeometry(radius, detail, detail), MoonMaterial);
   MoonMesh.scale.set(scale, scale, scale);
-  MoonMesh.boundingBox = new THREE.Box3().setFromObject(MoonMesh); // Calculate bounding box
   MoonMesh.radius = radius*scale;
   MoonMesh.name = 'Moon'
   MoonOrbit.add(MoonMesh); // Add the moon mesh to the moon orbit

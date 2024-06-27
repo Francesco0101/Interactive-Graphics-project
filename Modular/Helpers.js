@@ -3,8 +3,8 @@ import * as THREE from 'three';
 export class MinMaxGUIHelper {
     constructor(obj, minProp, maxProp, minDif) {
         this.obj = obj;           // The object containing the properties
-        this.minProp = minProp;   // The name of the min property
-        this.maxProp = maxProp;   // The name of the max property
+        this.minProp = minProp;   // min property
+        this.maxProp = maxProp;   // max property
         this.minDif = minDif;     // The minimum difference between min and max
     }
     get min() {

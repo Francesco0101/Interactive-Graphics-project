@@ -8,7 +8,7 @@ export function setupGUI(camera, activeCamera, followCamera, TPcamera, scene) {
     const gui_camera = gui.addFolder('Camera_params');
 
     // Add a control for the camera's field of view and update the projection matrix on change
-    gui_camera.add(camera, 'fov', 1, 180).onChange(() => active.updateProjectionMatrix());
+    gui_camera.add(camera, 'fov', 1, 180).onChange(() => camera.updateProjectionMatrix());
     
     // Create a helper for controlling the camera's near and far clipping planes
     const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
@@ -30,9 +30,6 @@ export function setupGUI(camera, activeCamera, followCamera, TPcamera, scene) {
     
     // PointLight controls
     const lightFolder = gui.addFolder('Sun_Light');
-    lightFolder.add(pointLight.position, 'x', -500, 500).name('posX');
-    lightFolder.add(pointLight.position, 'y', -500, 500).name('posY');
-    lightFolder.add(pointLight.position, 'z', -500, 500).name('posZ');
     lightFolder.add(pointLight, 'intensity', 0, 1000).name('intensity'); //  intensity property determines the brightness of the light.
     lightFolder.add(pointLight, 'distance', 0, 1000).name('distance');  // The distance property specifies how far the light travels from its source before it diminishes to zero.
     lightFolder.add(pointLight, 'decay', 0, 2).name('decay'); // decay property determines the rate at which the light intensity decreases as it travels away from the source.

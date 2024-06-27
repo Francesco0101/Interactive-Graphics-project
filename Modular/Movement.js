@@ -39,31 +39,16 @@ window.addEventListener('keyup', (event) => {
  
 
 // Function to move the spaceship based on the current state of the keys and physics parameters
-export function moveSpaceship(Spaceship_obj, delta , realistic = true, light) {
+export function moveSpaceship(Spaceship_obj, delta , light) {
     if (Spaceship_obj) {
+        
         const maxVelocity = Spaceship_obj.MaxVelocity; // Set your desired max velocity
         const dampingFactor = 0.95; // Adjust this value for the rate of slowing down
-        const thrustPower = 0.5; // Adjust this value for the rate of acceleration
-        //light.position is the copy of the space pos
-        light.position.copy(Spaceship_obj.position);
-     
+        const thrustPower = 0.4; // Adjust this value for the rate of acceleration
 
-        if (realistic) {
-        if (keys.space.pressed) {
-            if (Spaceship_obj.Fuel > 0) {  //CHANGE WHEN FUEL IS IMPLEMENTED
+        //light.position is the copy of the space position
+        // light.position.copy(Spaceship_obj.position);
 
-                // Calculate the thrust direction and apply it
-                const forward = new THREE.Vector3(0, 0, thrustPower).applyQuaternion(Spaceship_obj.quaternion);
-                Spaceship_obj.velocity.add(forward);
-                Spaceship_obj.Fuel -= 0.25;
-                
-                // Clamp the velocity to the maximum velocity
-                if (Spaceship_obj.velocity.length() > maxVelocity) { //velocity.lenght is the magnitude of the velocity vector
-                    Spaceship_obj.velocity.setLength(maxVelocity); 
-                }
-            }
-        }
-        } else {
             if (keys.space.pressed) {
                 // console.log("non realistico: ",realistic)
                 if (Spaceship_obj.Fuel > 0) {
@@ -72,9 +57,11 @@ export function moveSpaceship(Spaceship_obj, delta , realistic = true, light) {
                     const forward = new THREE.Vector3(0, 0, thrustPower).applyQuaternion(Spaceship_obj.quaternion);
                     // Calculate the thrust direction and apply it
                     Spaceship_obj.velocity.add(forward);
+                    
               
                     const forwardDir = forward.clone().normalize();
                     const currentVelocity = Spaceship_obj.velocity.clone();
+
                     const forwardComponent = forwardDir.multiplyScalar(currentVelocity.dot(forwardDir));
                     const lateralComponent = currentVelocity.sub(forwardComponent).multiplyScalar(dampingFactor);
                      // Reduce the other components of velocity
@@ -87,7 +74,7 @@ export function moveSpaceship(Spaceship_obj, delta , realistic = true, light) {
                     }
                 }
               }
-        }
+        
 
         if (keys.l.pressed) {
             Spaceship_obj.velocity.multiplyScalar(dampingFactor);
@@ -97,14 +84,13 @@ export function moveSpaceship(Spaceship_obj, delta , realistic = true, light) {
             }
         }
 
-        // Update the spaceship's position based on its velocity and the delta time
-        
+        // Update the spaceship's position based on its velocity and the delta time 
         Spaceship_obj.position.add(Spaceship_obj.velocity.clone().multiplyScalar(delta));
         
         const omega = Spaceship_obj.velocity.length()/(Spaceship_obj.side_len*3); //angular velocity
         const rot_ang = omega*delta + 0.03; //rotation angle
         if (keys.w.pressed) {
-            Spaceship_obj.rotateX(-rot_ang) // Function rotateX rotates the object around the x-axis of the object in the world space
+            Spaceship_obj.rotateX(-rot_ang) // Function rotateX rotates the object around the axis of the object in the world space
         }
         if (keys.s.pressed) {
             Spaceship_obj.rotateX(rot_ang);
